@@ -1,0 +1,14 @@
+; 00-fans+heaters-OFF
+;
+; turn off all heaters and fans
+;
+if state.status == "processing"
+   M291 S2 P"Cannot run during an ongoing print. Please run this macro when the printer is paused!" R"WARNING!"
+   M99
+;
+G10 P0 S-274 R-274  ; turn off nozzle
+M140 S0 R0          ; turn off heatbed
+M140 S-274          ; set bed temperature to 0K to turn it off
+M106 P0 S0          ; turn off part cooling fan
+M98 P"0:/macros/02-Fan-Control/all-fans-off"
+M84                 ; disable motors
